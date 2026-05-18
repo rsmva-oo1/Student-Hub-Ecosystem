@@ -178,7 +178,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Scrollbar dizayni */
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #080b14; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
