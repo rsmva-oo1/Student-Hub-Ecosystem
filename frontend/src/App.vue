@@ -156,7 +156,9 @@
     filter: blur(0);
   }
 }
-
+.bg-slate-850\/40 {
+  background-color: rgba(30, 41, 59, 0.4);
+}
 
 
 </style>
