@@ -119,9 +119,15 @@
 
         <div class="group relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 p-8 rounded-[32px] border border-slate-800/50 hover:border-slate-700 transition-all duration-500 shadow-2xl flex flex-col justify-between opacity-0 animate-[scaleUp_0.7s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
           <span class="text-xs font-semibold tracking-widest text-slate-500 uppercase">Tizim Haqiqiy Vaqti</span>
-          <div class="text-4xl font-extrabold font-mono text-white tracking-wider bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
-            23:45
-          </div>
+         <script setup>
+           const currentTime = ref(new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+const greeting = computed(() => {
+  const hour = new Date().getHours();
+  if (hour < 6) return "Xayrli tun";
+  if (hour < 12) return "Xayrli tong";
+  if (hour < 18) return "Xayrli kun";
+  return "Xayrli kech";
+});
         </div>
 
       </div>
