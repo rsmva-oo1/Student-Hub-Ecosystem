@@ -62,8 +62,7 @@ const addTask = () => {
 </script>
 
 <template>
-  <div :class="isDarkMode ? 'bg-[#080b14] text-slate-100' : 'bg-slate-50 text-slate-800'" class="min-h-screen flex font-sans selection:bg-cyan-500/30 transition-colors duration-500">
-    
+<div :class="isDarkMode ? 'bg-slate-800' : 'bg-slate-200'" class="h-8 w-[1px]"></div>    
     <aside :class="isDarkMode ? 'bg-[#0b0f19]/50 border-slate-800/50' : 'bg-white border-slate-200'" class="w-20 hidden lg:flex flex-col items-center py-8 border-r backdrop-blur-xl z-20 transition-colors duration-500">
       <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/20 mb-10 group cursor-pointer">
         <span class="text-white font-black text-xl group-hover:scale-110 transition-transform">S</span>
