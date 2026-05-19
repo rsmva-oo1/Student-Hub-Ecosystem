@@ -1,13 +1,10 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import API from './api'; 
-
-
+import API from './api';
 const isDarkMode = ref(true);
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value;
 };
-
 
 const currentTime = ref(new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
 const greeting = computed(() => {
@@ -42,7 +39,6 @@ const toggleTask = (task) => {
   task.completed = !task.completed;
 };
 
-
 const isModalOpen = ref(false);
 const newTaskTitle = ref('');
 
@@ -62,7 +58,8 @@ const addTask = () => {
 </script>
 
 <template>
-<div :class="isDarkMode ? 'bg-slate-800' : 'bg-slate-200'" class="h-8 w-[1px]"></div>    
+  <div :class="{ 'dark bg-[#080b14] text-slate-100': isDarkMode, 'bg-slate-50 text-slate-800': !isDarkMode }" class="min-h-screen flex font-sans selection:bg-cyan-500/30 transition-colors duration-500">
+    
     <aside :class="isDarkMode ? 'bg-[#0b0f19]/50 border-slate-800/50' : 'bg-white border-slate-200'" class="w-20 hidden lg:flex flex-col items-center py-8 border-r backdrop-blur-xl z-20 transition-colors duration-500">
       <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/20 mb-10 group cursor-pointer">
         <span class="text-white font-black text-xl group-hover:scale-110 transition-transform">S</span>
@@ -107,7 +104,7 @@ const addTask = () => {
                  <div class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">API Latency</div>
                  <div class="text-sm font-mono text-emerald-500">24ms</div>
                </div>
-               <div class="h-8 w-[1px] :class='isDarkMode ? \'bg-slate-800\' : \'bg-slate-200\''"></div>
+               <div :class="isDarkMode ? 'bg-slate-800' : 'bg-slate-200'" class="h-8 w-[1px]"></div>
                <div class="relative flex h-3 w-3">
                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                  <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
@@ -144,7 +141,7 @@ const addTask = () => {
                 </div>
               </div>
             </div>
-            <div :class="isDarkMode ? 'border-slate-800/50 text-slate-500' : 'border-slate-100 text-slate-400'" class="flex items-center gap-4 text-xs mt-6 pt-6 border-t">
+            <div :class="isDarkMode ? 'border-slate-800/50 text-slate-500' : 'border-slate-200 text-slate-400'" class="flex items-center gap-4 text-xs mt-6 pt-6 border-t">
                <span>Darslar yakunlanishiga: <strong>1.5 soat</strong></span>
             </div>
           </div>
@@ -188,7 +185,7 @@ const addTask = () => {
 
           <div class="md:col-span-3 row-span-1 bg-gradient-to-r from-amber-500/10 to-transparent p-8 rounded-[40px] border border-amber-500/20 flex items-center justify-between group opacity-0 animate-[scaleUp_0.7s_ease-out_0.5s_forwards]">
             <div class="flex items-center gap-6">
-              <div class="w-12 h-12 bg-amber-500/20 rounded-2xl flex items-center justify-center text-amber-500 text-xl group-hover:animate-bounce">🔔</div>
+              <div class="w-12 h-12 bg-amber-500/20 rounded-2xl flex items-center justify-center text-amber-400 text-xl group-hover:animate-bounce">🔔</div>
               <div>
                 <h4 class="text-amber-600 font-black text-xs uppercase tracking-widest">Diqqat</h4>
                 <p :class="isDarkMode ? 'text-slate-200' : 'text-slate-700'" class="font-semibold">Ertaga yakuniy nazorat testi bor!</p>
@@ -200,44 +197,3 @@ const addTask = () => {
         </div>
       </div>
     </main>
-
-    <div v-if="isModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 transition-all">
-      <div :class="isDarkMode ? 'bg-[#0b0f19] border-slate-800' : 'bg-white border-slate-200'" class="border w-full max-w-md p-8 rounded-[32px] shadow-2xl relative animate-[scaleUp_0.3s_ease-out_forwards]">
-        <h3 :class="isDarkMode ? 'text-white' : 'text-slate-900'" class="text-xl font-bold mb-2">Yangi vazifa qo'shish</h3>
-        <p class="text-slate-400 text-xs mb-6">Bajarilishi kerak bo'lgan topshiriq nomini kiriting.</p>
-        
-        <input v-model="newTaskTitle" @keyup.enter="addTask" type="text" placeholder="Masalan: Backend darsini ko'rib chiqish..." :class="isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-800'" class="w-full border rounded-xl px-4 py-3.5 text-sm placeholder-slate-400 focus:outline-none focus:border-cyan-500/50 transition-colors mb-6" autofocus/>
-        
-        <div class="flex justify-end gap-3">
-          <button @click="closeModal" :class="isDarkMode ? 'bg-slate-900 hover:bg-slate-800' : 'bg-slate-100 hover:bg-slate-200'" class="px-5 py-3 rounded-xl text-xs text-slate-400 font-semibold transition-colors">Bekor qilish</button>
-          <button @click="addTask" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-xs text-white font-bold shadow-lg shadow-cyan-500/20 transition-all">Qo'shish</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</template>
-
-<style>
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-30px); filter: blur(10px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
-@keyframes scaleUp {
-  from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
-  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-}
-
-body {
-  transition: background-color 0.5s ease;
-  overflow-x: hidden;
-}
-
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #334155; }
-</style>
