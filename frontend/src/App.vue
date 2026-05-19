@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-
+import API from './api'; 
 const currentTime = ref(new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
 const greeting = computed(() => {
   const hour = new Date().getHours();
@@ -10,18 +10,25 @@ const greeting = computed(() => {
   return "Xayrli kech";
 });
 
+const tasks = ref([]);
+
+const fetchTasks = async () => {
+  try {
+    const response = await API.get('/tasks');
+    tasks.value = response.data;
+  } catch (error) {
+    console.error("Backenddan ma'lumot olishda xatolik:", error);
+  }
+};
+
 onMounted(() => {
   setInterval(() => {
     const now = new Date();
     currentTime.value = now.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   }, 1000);
-});
 
-const tasks = ref([
-  { id: 1, title: 'FastAPI integratsiyasi', completed: true },
-  { id: 2, title: 'Vue premium dashboard dizayni', completed: false },
-  { id: 3, title: 'Ma\'lumotlar bazasini ulash', completed: false },
-]);
+  fetchTasks();
+});
 
 const toggleTask = (task) => {
   task.completed = !task.completed;
@@ -148,7 +155,12 @@ const addTask = () => {
           <div class="md:col-span-1 row-span-2 bg-slate-900/40 backdrop-blur-md p-8 rounded-[40px] border border-slate-800/50 opacity-0 animate-[scaleUp_0.7s_ease-out_0.4s_forwards] flex flex-col justify-between">
             <div>
               <h3 class="text-lg font-bold text-white mb-6">Vazifalar</h3>
-              <div class="space-y-4 max-h-[140px] overflow-y-auto pr-1">
+              
+              <div v-if="tasks.length === 0" class="text-slate-500 text-xs py-4 text-center">
+                Vazifalar yuklanmoqda...
+              </div>
+
+              <div v-else class="space-y-4 max-h-[140px] overflow-y-auto pr-1">
                 <div v-for="task in tasks" :key="task.id" @click="toggleTask(task)" class="flex items-center gap-3 group/task cursor-pointer select-none">
                   <div :class="task.completed ? 'bg-emerald-500 border-emerald-500' : 'border-slate-700'" class="w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all group-hover/task:border-cyan-500 shrink-0">
                     <i v-if="task.completed" class="fas fa-check text-[10px] text-white"></i>
