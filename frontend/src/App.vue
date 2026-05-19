@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 
-// 1. Haqiqiy vaqt mantiqi
 const currentTime = ref(new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
 const greeting = computed(() => {
   const hour = new Date().getHours();
@@ -13,19 +12,37 @@ const greeting = computed(() => {
 
 onMounted(() => {
   setInterval(() => {
-    currentTime.ref = new Date().toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    // Ref-ni to'g'ri yangilash
     const now = new Date();
     currentTime.value = now.toLocaleTimeString('uz-UZ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   }, 1000);
 });
 
-// 2. Vazifalar holati
 const tasks = ref([
   { id: 1, title: 'FastAPI integratsiyasi', completed: true },
   { id: 2, title: 'Vue premium dashboard dizayni', completed: false },
   { id: 3, title: 'Ma\'lumotlar bazasini ulash', completed: false },
 ]);
+
+const toggleTask = (task) => {
+  task.completed = !task.completed;
+};
+
+const isModalOpen = ref(false);
+const newTaskTitle = ref('');
+
+const openModal = () => { isModalOpen.value = true; };
+const closeModal = () => { isModalOpen.value = false; newTaskTitle.value = ''; };
+
+const addTask = () => {
+  if (newTaskTitle.value.trim() !== '') {
+    tasks.value.push({
+      id: Date.now(),
+      title: newTaskTitle.value,
+      completed: false
+    });
+    closeModal();
+  }
+};
 </script>
 
 <template>
@@ -61,7 +78,7 @@ const tasks = ref([
               {{ greeting }}, <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Munisa</span>
             </h1>
             <p class="text-slate-400 text-sm mt-2 flex items-center gap-2">
-              <i class="far fa-calendar-alt text-cyan-500"></i> Bugun: 18-May, Dushanba
+              <i class="far fa-calendar-alt text-cyan-500"></i> Bugun: 19-May, Seshanba
             </p>
           </div>
           
@@ -99,20 +116,17 @@ const tasks = ref([
                     <i class="fas fa-ellipsis-h text-slate-600"></i>
                   </div>
                   <h3 class="text-slate-200 font-semibold mb-1 group-hover/card:text-white transition-colors">
-                    {{ i == 1 ? 'Sun\'iy Intellekt' : 'Veb Dasturlash' }}
+                    {{ i == 1 ? 'Sun\'iy Intellekt Asoslari' : 'Veb Dasturlash (FastAPI)' }}
                   </h3>
-                  <p class="text-xs text-slate-500 mb-4">Xona: 402-A (Online)</p>
+                  <p class="text-xs text-slate-500 mb-4">Xona: 402-A (Moodle)</p>
                   <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                    <div class="bg-cyan-500 h-full w-[70%] rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
+                    <div :class="i == 1 ? 'w-[85%]' : 'w-[40%]'" class="bg-cyan-500 h-full rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="flex items-center gap-4 text-xs text-slate-500 mt-6 pt-6 border-t border-slate-800/50">
-               <span>Darslar tugashiga: <strong>2 soat</strong></span>
-               <div class="flex -space-x-2">
-                 <div v-for="i in 3" :key="i" class="w-6 h-6 rounded-full border-2 border-[#0b0f19] bg-slate-700 flex items-center justify-center text-[8px] font-bold">M</div>
-               </div>
+               <span>Darslar yakunlanishiga: <strong>1.5 soat</strong></span>
             </div>
           </div>
 
@@ -127,20 +141,25 @@ const tasks = ref([
           </div>
 
           <div class="bg-gradient-to-tr from-cyan-900/20 to-slate-900 p-6 rounded-[35px] border border-slate-800/50 flex flex-col justify-center opacity-0 animate-[scaleUp_0.7s_ease-out_0.3s_forwards]">
-            <div class="text-[10px] font-bold text-cyan-500 uppercase mb-1">Student Rank</div>
+            <div class="text-[10px] font-bold text-cyan-500 uppercase mb-1">Talaba Reytingi</div>
             <div class="text-xl font-black text-white">TOP #12</div>
           </div>
 
-          <div class="md:col-span-1 row-span-2 bg-slate-900/40 backdrop-blur-md p-8 rounded-[40px] border border-slate-800/50 opacity-0 animate-[scaleUp_0.7s_ease-out_0.4s_forwards]">
-            <h3 class="text-lg font-bold text-white mb-6">Vazifalar</h3>
-            <div class="space-y-4">
-              <div v-for="task in tasks" :key="task.id" class="flex items-center gap-3 group/task cursor-pointer">
-                <div :class="task.completed ? 'bg-emerald-500 border-emerald-500' : 'border-slate-700'" class="w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all group-hover/task:border-cyan-500">
-                  <i v-if="task.completed" class="fas fa-check text-[10px] text-white"></i>
+          <div class="md:col-span-1 row-span-2 bg-slate-900/40 backdrop-blur-md p-8 rounded-[40px] border border-slate-800/50 opacity-0 animate-[scaleUp_0.7s_ease-out_0.4s_forwards] flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-6">Vazifalar</h3>
+              <div class="space-y-4 max-h-[140px] overflow-y-auto pr-1">
+                <div v-for="task in tasks" :key="task.id" @click="toggleTask(task)" class="flex items-center gap-3 group/task cursor-pointer select-none">
+                  <div :class="task.completed ? 'bg-emerald-500 border-emerald-500' : 'border-slate-700'" class="w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all group-hover/task:border-cyan-500 shrink-0">
+                    <i v-if="task.completed" class="fas fa-check text-[10px] text-white"></i>
+                  </div>
+                  <span :class="task.completed ? 'text-slate-500 line-through' : 'text-slate-300'" class="text-xs font-medium transition-all truncate">{{ task.title }}</span>
                 </div>
-                <span :class="task.completed ? 'text-slate-500 line-through' : 'text-slate-300'" class="text-xs font-medium">{{ task.title }}</span>
               </div>
             </div>
+            <button @click="openModal" class="w-full bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs py-3 rounded-2xl font-bold border border-slate-700/50 transition-all mt-4">
+              + Yangi Vazifa
+            </button>
           </div>
 
           <div class="md:col-span-3 row-span-1 bg-gradient-to-r from-amber-500/10 to-transparent p-8 rounded-[40px] border border-amber-500/20 flex items-center justify-between group opacity-0 animate-[scaleUp_0.7s_ease-out_0.5s_forwards]">
@@ -157,6 +176,21 @@ const tasks = ref([
         </div>
       </div>
     </main>
+
+    <div v-if="isModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 transition-all">
+      <div class="bg-[#0b0f19] border border-slate-800 w-full max-w-md p-8 rounded-[32px] shadow-2xl relative animate-[scaleUp_0.3s_ease-out_forwards]">
+        <h3 class="text-xl font-bold text-white mb-2">Yangi vazifa qo'shish</h3>
+        <p class="text-slate-400 text-xs mb-6">Bajarilishi kerak bo'lgan topshiriq nomini kiriting.</p>
+        
+        <input v-model="newTaskTitle" @keyup.enter="addTask" type="text" placeholder="Masalan: Backend darsini ko'rib chiqish..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 transition-colors mb-6" autofocus/>
+        
+        <div class="flex justify-end gap-3">
+          <button @click="closeModal" class="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs text-slate-400 font-semibold transition-colors">Bekor qilish</button>
+          <button @click="addTask" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-xs text-white font-bold shadow-lg shadow-cyan-500/20 transition-all">Qo'shish</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -178,9 +212,8 @@ body {
   overflow-x: hidden;
 }
 
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #080b14; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #334155; }
 </style>
