@@ -103,7 +103,7 @@ const addTask = () => {
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[110px]">
           
-          <div :class="isDarkMode ? 'bg-slate-900/40 border-slate-800/50' : 'bg-white border-slate-200 shadow-sm'" class="md:col-span-3 row-span-3 p-8 rounded-[40px] border flex flex-col justify-between transition-all duration-500">
+          <div :class="isDarkMode ? 'bg-slate-900/40 border-slate-800/50' : 'bg-white border-slate-200 shadow-md hover:shadow-xl">
             <div>
               <div class="flex justify-between items-center mb-8">
                 <h2 class="text-2xl font-bold flex items-center gap-4">
