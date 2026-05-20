@@ -28,3 +28,9 @@ Talabalar uchun dars jadvali, tizim vaqti, reyting hamda jonli vazifalarni (To-D
 
 ---
 
+## 🚀 Loyihani Lokal Kompyuterda Ishga Tushirish
+
+### 1. Loyihani yuklab olish:
+```bash
+git clone [https://github.com/rsmva-oo1/Student-Hub-Ecosystem.git](https://github.com/rsmva-oo1/Student-Hub-Ecosystem.git)
+cd Student-Hub-Ecosystem
