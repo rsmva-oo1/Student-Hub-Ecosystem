@@ -6,12 +6,12 @@ Talabalar uchun dars jadvali, tizim vaqti, reyting hamda jonli vazifalarni (To-D
 
 ##  Loyihaning Asosiy Imkoniyatlari (Features)
 
-* **   Premium Dark/Light Mode:** Ko'zni charchatmaydigan, silliq animatsiyaga ega bo'lgan quyosh/oy rejimi almashtirgichi.
-* **  Bento Grid Dars Jadvali:** O'quv soatlari va fanlarni qulay, vizual ierarxiyaga ega bloklarda kuzatish.
-* **  Jonli Tizim Vaqti:** Real vaqt rejimida (Tashkent GMT +5) ishlovchi raqamli soat.
-* **  Talaba Reytingi (Leaderboard):** Talabaning umumiy koeffitsiyent bo'yicha tizimdagi jonli o'rni.
-* **  Interaktiv Vazifalar (Tasks):** Yangi topshiriqlar qo'shish uchun zamonaviy modal oyna va vazifalarni yakunlash mantiqi.
-* **  Backend Integratsiya:** Ma'lumotlarni FastAPI (yoki Node.js) backend xizmatidan Axios orqali real vaqtda qabul qilish.
+ **   Premium Dark/Light Mode:** Ko'zni charchatmaydigan, silliq animatsiyaga ega bo'lgan quyosh/oy rejimi almashtirgichi.
+ **  Bento Grid Dars Jadvali:** O'quv soatlari va fanlarni qulay, vizual ierarxiyaga ega bloklarda kuzatish.
+ **  Jonli Tizim Vaqti:** Real vaqt rejimida (Tashkent GMT +5) ishlovchi raqamli soat.
+ **  Talaba Reytingi (Leaderboard):** Talabaning umumiy koeffitsiyent bo'yicha tizimdagi jonli o'rni.
+ **  Interaktiv Vazifalar (Tasks):** Yangi topshiriqlar qo'shish uchun zamonaviy modal oyna va vazifalarni yakunlash mantiqi.
+ **  Backend Integratsiya:** Ma'lumotlarni FastAPI (yoki Node.js) backend xizmatidan Axios orqali real vaqtda qabul qilish.
 
 ---
 
