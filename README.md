@@ -2,7 +2,8 @@
 
 Talabalar uchun dars jadvali, tizim vaqti, reyting hamda jonli vazifalarni (To-Do) real vaqt rejimida boshqarish imkoniyatini beruvchi premium va zamonaviy veb-dashboard loyihasi.
 
----
+---------
+
 
 ##  Loyihaning Asosiy Imkoniyatlari (Features)
 
@@ -24,7 +25,7 @@ Talabalar uchun dars jadvali, tizim vaqti, reyting hamda jonli vazifalarni (To-D
 * **Axios** — Backend API bilan xavfsiz aloqa.
 
 ### Server (Orqa fon qismi):
-* **FastAPI / Python** (yoki o'rnatilgan backend texnologiyasi)
+***FastAPI / Python** (yoki o'rnatilgan backend texnologiyasi)
 
 ---
 
