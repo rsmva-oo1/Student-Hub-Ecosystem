@@ -23,7 +23,7 @@ Talabalar uchun dars jadvali, tizim vaqti, reyting hamda jonli vazifalarni (To-D
 * **Tailwind CSS** — Zamonaviy va moslashuvchan (Responsive) dizayn tizimi.
 * **Vite** — Loyihani tezkor yig'ish (Build) va ishga tushirish muhiti.
 * **Axios** — Backend API bilan xavfsiz aloqa.
-
+ 
 ### Server (Orqa fon qismi):
 *** FastAPI / Python** (yoki o'rnatilgan backend texnologiyasi)
 
